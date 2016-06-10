@@ -21,6 +21,7 @@
 // THE SOFTWARE.
 
 #import "AppDelegate.h"
+#import <BuddyBuildSDK/BuddyBuildSDK.h>
 
 @interface AppDelegate ()
 
@@ -30,6 +31,8 @@
 
 - (BOOL)application:(UIApplication *)application
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+  [BuddyBuildSDK setup];
+  
   // Override point for customization after application launch.
   return YES;
 }
