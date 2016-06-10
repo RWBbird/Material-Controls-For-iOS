@@ -104,63 +104,78 @@ static NSArray *controlsName;
 #pragma mark - Table View
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-  return 1;
+  return 2;
 }
 
 - (void)tableView:(UITableView *)tableView
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-  UIViewController *controller = nil;
-  NSString *row = self.controls[indexPath.row];
-  if ([row isEqualToString:@"Button"]) {
-    controller = [[ButtonViewController alloc] init];
-  } else if ([row isEqualToString:@"ButtonFloating"]) {
-    controller = [[FloatingButtonTableViewController alloc] init];
-  } else if ([row isEqualToString:@"TableView Cell"]) {
-    controller = [[TableViewController alloc] init];
-  } else if ([row isEqualToString:@"Progress Bar"]) {
-    controller = [[ProgressViewController alloc] init];
-  } else if ([row isEqualToString:@"Text Field"]) {
-    controller = [[TextFieldViewController alloc] init];
-  } else if ([row isEqualToString:@"Switch"]) {
-    controller = [[SwitchViewController alloc] init];
-  } else if ([row isEqualToString:@"Date Picker"]) {
-    controller = [[DatePickerViewController alloc] init];
-  } else if ([row isEqualToString:@"Date Picker Dialog"]) {
-    controller = [[DatePickerDialogController alloc] init];
-  } else if ([row isEqualToString:@"Collection View Cell"]) {
-    controller = [[CollectionViewController alloc] init];
-  } else if ([row isEqualToString:@"Tab Bar"]) {
-    controller = [[TabBarViewController alloc] init];
-  } else if ([row isEqualToString:@"Time Picker Dialog"]) {
-    controller = [[TimePickerDialogViewController alloc] init];
-  } else if ([row isEqualToString:@"Tab Bar View Controller"]) {
-    controller = [[TabBarViewControllerViewController alloc] init];
-  } else if ([row isEqualToString:@"Snackbar"]) {
-    controller = [[SnackBarViewController alloc] init];
-  } else if ([row isEqualToString:@"Toast"]) {
-    controller = [[ToastViewController alloc] init];
-  } else if ([row isEqualToString:@"Slider"]) {
-    controller = [[SliderViewController alloc] init];
-  }
-
-  if (controller)
-    [self.navigationController pushViewController:controller animated:YES];
+    
+    if(indexPath.section == 0){
+        
+        UIViewController *controller = nil;
+        NSString *row = self.controls[indexPath.row];
+        if ([row isEqualToString:@"Button"]) {
+            controller = [[ButtonViewController alloc] init];
+        } else if ([row isEqualToString:@"ButtonFloating"]) {
+            controller = [[FloatingButtonTableViewController alloc] init];
+        } else if ([row isEqualToString:@"TableView Cell"]) {
+            controller = [[TableViewController alloc] init];
+        } else if ([row isEqualToString:@"Progress Bar"]) {
+            controller = [[ProgressViewController alloc] init];
+        } else if ([row isEqualToString:@"Text Field"]) {
+            controller = [[TextFieldViewController alloc] init];
+        } else if ([row isEqualToString:@"Switch"]) {
+            controller = [[SwitchViewController alloc] init];
+        } else if ([row isEqualToString:@"Date Picker"]) {
+            controller = [[DatePickerViewController alloc] init];
+        } else if ([row isEqualToString:@"Date Picker Dialog"]) {
+            controller = [[DatePickerDialogController alloc] init];
+        } else if ([row isEqualToString:@"Collection View Cell"]) {
+            controller = [[CollectionViewController alloc] init];
+        } else if ([row isEqualToString:@"Tab Bar"]) {
+            controller = [[TabBarViewController alloc] init];
+        } else if ([row isEqualToString:@"Time Picker Dialog"]) {
+            controller = [[TimePickerDialogViewController alloc] init];
+        } else if ([row isEqualToString:@"Tab Bar View Controller"]) {
+            controller = [[TabBarViewControllerViewController alloc] init];
+        } else if ([row isEqualToString:@"Snackbar"]) {
+            controller = [[SnackBarViewController alloc] init];
+        } else if ([row isEqualToString:@"Toast"]) {
+            controller = [[ToastViewController alloc] init];
+        } else if ([row isEqualToString:@"Slider"]) {
+            controller = [[SliderViewController alloc] init];
+        }
+        
+        if (controller)
+            [self.navigationController pushViewController:controller animated:YES];
+    }
+    else{
+        id object = @"";
+        [self.navigationController pushViewController:object animated:YES];
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section {
-  return self.controls.count;
+    return (section == 0) ? self.controls.count : 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  UITableViewCell *cell =
-      [tableView dequeueReusableCellWithIdentifier:@"Cell"
-                                      forIndexPath:indexPath];
-
-  NSDate *object = self.controls[indexPath.row];
-  cell.textLabel.text = [object description];
-  return cell;
-}
+    
+    UITableViewCell *cell =
+    [tableView dequeueReusableCellWithIdentifier:@"Cell"
+                                    forIndexPath:indexPath];
+    
+    if(indexPath.section == 0){
+        NSDate *object = self.controls[indexPath.row];
+        cell.textLabel.text = [object description];
+    }
+    else{
+        cell.textLabel.text = @"Tap to crash";
+        cell.textLabel.textColor = [UIColor redColor];
+    }
+    return cell;
+  }
 
 @end
